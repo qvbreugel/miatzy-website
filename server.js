@@ -8,14 +8,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const routes = require("./routes"); //HERE
 const sessionStore = require("./config/promiseConnection");
-const { Client } = require("pg");
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-
-client.connect();
 
 const PORT = process.env.PORT; // Stored in .env File along with DB Config.
 if (process.env.NODE_ENV === "production") {
