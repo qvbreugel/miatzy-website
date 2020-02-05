@@ -7,14 +7,13 @@ import {
 } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import API from "./utils/API";
-import Dashboard from "./pages/Dashboard";
-import ManagerDashboard from "./pages/ManagerDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import About from "./pages/About";
 import NoMatch from "./pages/NoMatch";
 import TopNavbar from "./components/TopNavbar"; // WrappedWithRouter
 import UserContext from "./UserContext";
+import "./App.css";
 /* eslint-disable no-console */
 import PrivateAccessRoute from "./components/PrivateAccessRoute";
 class App extends React.Component {
@@ -65,49 +64,15 @@ class App extends React.Component {
     return (
       <UserContext.Provider value={this.state}>
         <Router>
-          {user.access_id === 0 ? (
-            <Container className="mx-0" fluid>
-              <Login />
-              <Redirect to="/" />
+          <div>
+            <Container>
+              <Switch>
+                <Route strict exact path="/" component={Login} />
+                <Route strict exact path="/register" component={Register} />
+                <Route component={NoMatch} />
+              </Switch>
             </Container>
-          ) : (
-            <div>
-              <TopNavbar />
-              <Container className="mx-0" fluid>
-                <Switch>
-                  <PrivateAccessRoute
-                    strict
-                    exact
-                    path="/"
-                    component={Dashboard}
-                    aId={1}
-                  />
-                  <PrivateAccessRoute
-                    strict
-                    exact
-                    path="/about"
-                    component={About}
-                    aId={1}
-                  />
-                  <PrivateAccessRoute
-                    strict
-                    exact
-                    path="/manager"
-                    component={ManagerDashboard}
-                    aId={2}
-                  />
-                  <PrivateAccessRoute
-                    strict
-                    exact
-                    path="/admin"
-                    component={AdminDashboard}
-                    aId={3}
-                  />
-                  <Route component={NoMatch} />
-                </Switch>
-              </Container>
-            </div>
-          )}
+          </div>
         </Router>
       </UserContext.Provider>
     );

@@ -33,9 +33,9 @@ export default {
     // Example POST: { "vals": ["test_user", "111111", 1] }
     console.log(newUser);
     try {
-      const { username, password, access_id } = newUser;
+      const { username, password, email, ticketnumber, access_id } = newUser;
       const res = await axios.post("/api/user", {
-        vals: [username, password, access_id]
+        vals: [username, password, email, ticketnumber, access_id]
       });
       console.log(res);
       return res;

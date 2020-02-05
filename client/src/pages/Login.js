@@ -1,91 +1,81 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import React, { useState, useContext } from "react";
+import { Form, Icon, Input, Button, Row, Col } from "antd";
 import UserContext from "../UserContext";
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleInputChange = event => {
-      const { name, value } = event.target;
-      this.setState({ [name]: value });
-    };
-    this.handleSubmit = event => {
-      event.preventDefault();
-      if (this.isValidInput()) {
-        this.context.postUserLogin({
-          username: this.state.username,
-          password: this.state.password
-        });
-      }
-    };
-    this.isValidInput = () => {
-      if (this.state.username.length < 4 || this.state.password.length < 5) {
-        return false;
-      } else {
-        return true;
-      }
-    };
-    this.state = {
-      username: "",
-      password: ""
-    };
-  }
+const Login = props => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  render() {
-    return (
-      <Row className="justify-content-center">
-        <Col xs="10">
-          <h1 className="text-center display-3 text-capitalize">
-            Welcome {this.state.username ? this.state.username : "User"}
-          </h1>
-          <Form
-            disabled={!this.isValidInput()}
-            onSubmit={e => this.handleSubmit(e)}
-            className="text-center border p-3"
-          >
-            <Form.Row className="justify-content-center">
-              <Form.Group controlId="loginUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  size="lg"
-                  onChange={this.handleInputChange}
-                  autoComplete="username"
-                  type="text"
-                  name="username"
+  const context = useContext(UserContext);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    context.postUserLogin({
+      username: username,
+      password: password
+    });
+  };
+  const { getFieldDecorator } = props.form;
+  return (
+    <div className="login">
+      <Row type="flex" justify="space-around" align="bottom">
+        <Col span={6}>
+          <h1 style={{ color: "white", fontSize: "64px" }}>Cercom</h1>
+          <Form onSubmit={handleSubmit} className="login-form">
+            <Form.Item>
+              {getFieldDecorator("username", {
+                rules: [
+                  { required: true, message: "Please input your username!" }
+                ]
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ color: "#2482c5" }} />}
+                  size="large"
                   placeholder="Username"
+                  onChange={e => {
+                    setUsername(e.target.value);
+                  }}
                 />
-              </Form.Group>
-            </Form.Row>
-            <Form.Row className="justify-content-center">
-              <Form.Group controlId="loginPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  size="lg"
-                  onChange={this.handleInputChange}
-                  autoComplete="current-password"
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("password", {
+                rules: [
+                  { required: true, message: "Please input your Password!" }
+                ]
+              })(
+                <Input
+                  prefix={<Icon type="lock" style={{ color: "#2482c5" }} />}
                   type="password"
-                  name="password"
+                  size="large"
                   placeholder="Password"
+                  onChange={e => {
+                    setPassword(e.target.value);
+                  }}
                 />
-              </Form.Group>
-            </Form.Row>
-            <Button
-              disabled={!this.isValidInput()}
-              className="w-75 mx-auto mb-2"
-              type="submit"
-              size="block"
-              variant="success"
-            >
-              Login
-            </Button>
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                className="login-form-button"
+                style={{
+                  color: "#374147",
+                  backgroundColor: "#f6fafd",
+                  width: "50%"
+                }}
+              >
+                Log in
+              </Button>
+              Or <a href="">register now!</a>
+            </Form.Item>
           </Form>
         </Col>
       </Row>
-    );
-  }
-}
+    </div>
+  );
+};
 Login.contextType = UserContext;
-export default Login;
+export default Form.create()(Login);

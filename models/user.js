@@ -55,7 +55,7 @@ const User = {
   },
   insertOne: (vals, cb) => {
     const queryString =
-      "INSERT INTO users (username, password, access_id) VALUES (?,?,?)";
+      "INSERT INTO users (username, password, email, ticketnumber, access_id) VALUES (?,?,?,?,?)";
     connection.execute(queryString, vals, (err, result) => {
       if (err) throw err;
       cb(result);
