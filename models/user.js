@@ -22,7 +22,7 @@ const User = {
   },
   getUserById: (id, done) => {
     const queryString =
-      "SELECT u.user_id, u.username, u.access_id, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
+      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, u.products_registered, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
     connection.execute(queryString, [id], (err, user) => {
       if (err) {
         return done(err, user);
@@ -32,7 +32,7 @@ const User = {
   },
   selectOneById: (id, cb) => {
     const queryString =
-      "SELECT u.user_id, u.username, u.access_id, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
+      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
     connection.execute(queryString, [id], (err, results) => {
       if (err) throw err;
       cb(results);

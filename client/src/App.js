@@ -13,9 +13,11 @@ import About from "./pages/About";
 import NoMatch from "./pages/NoMatch";
 import TopNavbar from "./components/TopNavbar"; // WrappedWithRouter
 import UserContext from "./UserContext";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 /* eslint-disable no-console */
 import PrivateAccessRoute from "./components/PrivateAccessRoute";
+import Products from "./pages/Products";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -69,6 +71,7 @@ class App extends React.Component {
               <Switch>
                 <Route strict exact path="/" component={Login} />
                 <Route strict exact path="/register" component={Register} />
+                <Route strict exact path="/products" component={Products} />
                 <Route component={NoMatch} />
               </Switch>
             </Container>

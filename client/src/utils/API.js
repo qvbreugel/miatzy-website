@@ -43,6 +43,38 @@ export default {
       return console.log(err);
     }
   },
+  postNewProduct: async newProduct => {
+    // Example POST: { "vals": ["test_user", "111111", 1] }
+
+    try {
+      const {
+        name,
+        category,
+        origin,
+        language,
+        description,
+        price,
+        ticketnumber,
+        created_by_user
+      } = newProduct;
+      const res = await axios.post("/api/product", {
+        vals: [
+          name,
+          category,
+          origin,
+          language,
+          description,
+          price,
+          ticketnumber,
+          created_by_user
+        ]
+      });
+      console.log(res);
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
   getAllUsers: async () => {
     try {
       const res = await axios.get("/api/user");
@@ -57,6 +89,15 @@ export default {
       const res = await axios.delete(`api/user/${id}`);
       console.log(res);
       return res;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
+  getAllProductsById: async () => {
+    try {
+      const res = await axios.get("/api/product");
+      console.log(res);
+      return res.data;
     } catch (err) {
       return console.log(err);
     }

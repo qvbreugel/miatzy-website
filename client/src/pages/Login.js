@@ -1,26 +1,34 @@
 import React, { useState, useContext } from "react";
 import { Form, Icon, Input, Button, Row, Col } from "antd";
 import UserContext from "../UserContext";
+import { Link, Redirect } from "react-router-dom";
+import API from "../utils/API";
 
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const context = useContext(UserContext);
+  const [loginStatus, setLoginStatus] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
-    context.postUserLogin({
-      username: username,
-      password: password
+    const userData = { username: username, password: password };
+    API.postUserLogin(userData, (err, res) => {
+      if (err === true) {
+        return console.log("an error occurred failed to log user in.");
+      }
+      if (res.user.access_id > 0) {
+        setLoginStatus(true);
+      }
     });
   };
   const { getFieldDecorator } = props.form;
-  return (
+  return loginStatus ? (
+    <Redirect to="/products" />
+  ) : (
     <div className="login">
       <Row type="flex" justify="space-around" align="bottom">
         <Col span={6}>
-          <h1 style={{ color: "white", fontSize: "64px" }}>Cercom</h1>
+          <h1 style={{ color: "black", fontSize: "64px" }}>Miatzy</h1>
           <Form onSubmit={handleSubmit} className="login-form">
             <Form.Item>
               {getFieldDecorator("username", {
@@ -69,7 +77,7 @@ const Login = props => {
               >
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              Or <Link to="/register">register now!</Link>
             </Form.Item>
           </Form>
         </Col>
