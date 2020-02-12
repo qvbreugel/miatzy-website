@@ -12,6 +12,7 @@ import NoMatch from "./pages/NoMatch";
 import "./App.css";
 import Products from "./pages/Products";
 import API from "./utils/API";
+import PrintProducts from "./pages/PrintProducts";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
@@ -38,7 +39,9 @@ const App = () => {
               strict
               exact
               path="/"
-              render={props => <Login {...props} setUser={setCurrentUser} />}
+              render={props => (
+                <Login {...props} setUser={setCurrentUser} user={currentUser} />
+              )}
             />
             <Route strict exact path="/register" component={Register} />
             <Route
@@ -53,9 +56,9 @@ const App = () => {
                 />
               )}
             />
+            <Route strict exact path="/print" component={PrintProducts} />
             <Route component={NoMatch} />
           </Switch>
-          {currentUser.access_id > 0 ? <Redirect to="/products" /> : null}
         </Container>
       </div>
     </Router>

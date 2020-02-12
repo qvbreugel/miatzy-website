@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Row, Col, Button, message } from "antd";
+import { Link } from "react-router-dom";
+import { Row, Col, Button, message, Popconfirm } from "antd";
 import API from "../utils/API";
 
 const TopBar = props => {
@@ -28,7 +29,9 @@ const TopBar = props => {
           <Button onClick={addProductHandler}>Add Product</Button>
         </Col>
         <Col>
-          <Button>Print Barcodes</Button>
+          <Link to="/print">
+            <Button>Print Barcodes</Button>
+          </Link>
         </Col>
         <Col>
           <Button>Change Ticketnumber</Button>
