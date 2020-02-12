@@ -7,12 +7,22 @@ module.exports = {
     });
   },
   createNewProduct: (req, res) => {
-    console.log(req.body);
-
-    const productData = req.body.vals; // grab onto the new user array of values
+    const productData = req.body.vals;
 
     db.Product.insertOne(productData, result => {
       res.status(200).json({ id: result.insertId });
+    });
+  },
+  updateProduct: (req, res) => {
+    const productData = req.body.vals;
+
+    db.Product.updateOne(productData, result => {
+      res.status(200).json(result);
+    });
+  },
+  deleteProduct: (req, res) => {
+    db.Product.deleteOne(req.body.data, data => {
+      res.status(200).json(data);
     });
   }
 };

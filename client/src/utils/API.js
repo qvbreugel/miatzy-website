@@ -17,6 +17,7 @@ export default {
         ? done(false, res.data)
         : done(false, "error logging in");
     } catch (err) {
+      console.log(err);
       console.log("serverside error thrown failed log in attempt");
       return done(true, false);
     }
@@ -96,8 +97,40 @@ export default {
   getAllProductsById: async () => {
     try {
       const res = await axios.get("/api/product");
-      console.log(res);
       return res.data;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
+  deleteProduct: async data => {
+    try {
+      const res = await axios.post("/api/product/delete", {
+        data
+      });
+      console.log(res);
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
+  updateProduct: async updatedProduct => {
+    // Example POST: { "vals": ["test_user", "111111", 1] }
+
+    try {
+      const {
+        name,
+        category,
+        origin,
+        language,
+        description,
+        price,
+        id
+      } = updatedProduct;
+      const res = await axios.post("/api/product/update", {
+        vals: [name, category, origin, language, description, price, id]
+      });
+      console.log(res);
+      return res;
     } catch (err) {
       return console.log(err);
     }

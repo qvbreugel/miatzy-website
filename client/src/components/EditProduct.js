@@ -13,62 +13,75 @@ import {
 } from "antd";
 import API from "../utils/API";
 
-const AddProduct = props => {
+const EditProduct = props => {
   const { Option } = Select;
-  const {
-    getFieldDecorator,
-    getFieldValue,
-    resetFields,
-    validateFields
-  } = props.form;
+  const { getFieldDecorator, getFieldValue, resetFields } = props.form;
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const handleSubmit = () => {
     setConfirmLoading(true);
-    validateFields((errors, values) => {
-      if (!errors) {
-        const productData = {
-          name: getFieldValue("name"),
-          category: getFieldValue("category"),
-          origin: getFieldValue("origin"),
-          language: getFieldValue("language"),
-          description: getFieldValue("description"),
-          price: getFieldValue("price"),
-          ticketnumber: props.user.ticketnumber,
-          created_by_user: props.user.user_id
-        };
-        API.postNewProduct(productData).then(res => {
-          if ((res.status = 200)) {
-            const productsLeft = 50 - (props.user.products_registered + 1);
-            resetFields();
-            setConfirmLoading(false);
-            if (props.user.access_id > 1) {
-              message.success(`The product has been added.`);
-            }
-            message.success(
-              `The product has been added. You can still add ${productsLeft} products.`
-            );
-          }
-        });
-      } else {
-        setConfirmLoading(false);
-      }
-    });
+    let changesMade = false;
+    let product = {
+      name: props.selectedProduct.name,
+      category: props.selectedProduct.category,
+      origin: props.selectedProduct.origin,
+      language: props.selectedProduct.language,
+      description: props.selectedProduct.description,
+      price: props.selectedProduct.price,
+      id: props.selectedProduct.id
+    };
+
+    if (getFieldValue("name") != product.name) {
+      changesMade = true;
+      product.name = getFieldValue("name");
+    }
+    if (getFieldValue("category") != product.category) {
+      changesMade = true;
+      product.category = getFieldValue("category");
+    }
+    if (getFieldValue("origin") != product.origin) {
+      changesMade = true;
+      product.origin = getFieldValue("origin");
+    }
+    if (getFieldValue("language") != product.language) {
+      changesMade = true;
+      product.language = getFieldValue("language");
+    }
+    if (getFieldValue("description") != product.description) {
+      changesMade = true;
+      product.description = getFieldValue("description");
+    }
+    if (getFieldValue("price") != product.price) {
+      changesMade = true;
+      product.price = getFieldValue("price");
+    }
+    if (changesMade) {
+      API.updateProduct(product).then(res => {
+        if ((res.status = 200)) {
+          setConfirmLoading(false);
+          message.success(`The product has been edited.`);
+        }
+      });
+    } else {
+      message.warning("Nothing was changed");
+      setConfirmLoading(false);
+    }
   };
 
   const handleCancel = () => {
+    resetFields();
     props.toggleRefresh();
-    props.setAddProductsVisible(false);
+    props.setEditProductsVisible(false);
   };
 
   return (
     <Modal
-      visible={props.addProductsVisible}
+      visible={props.editProductsVisible}
       onCancel={handleCancel}
       onOk={handleSubmit}
       confirmLoading={confirmLoading}
-      title="Add Product"
-      okText="Add"
+      title="Edit Product"
+      okText="Edit"
       width={720}
     >
       <Row>
@@ -78,22 +91,14 @@ const AddProduct = props => {
               <Col span={10}>
                 <Form.Item label="Product name">
                   {getFieldDecorator("name", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please input the name the your product",
-                        whitespace: true
-                      }
-                    ]
+                    initialValue: props.selectedProduct.name
                   })(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={13} offset={1}>
                 <Form.Item label="Select">
                   {getFieldDecorator("category", {
-                    rules: [
-                      { required: true, message: "Please select a category" }
-                    ]
+                    initialValue: props.selectedProduct.category
                   })(
                     <Select placeholder="Please select a category">
                       <Option value="Figures - Scaled Figures">
@@ -171,12 +176,16 @@ const AddProduct = props => {
                     </span>
                   }
                 >
-                  {getFieldDecorator("origin")(<Input />)}
+                  {getFieldDecorator("origin", {
+                    initialValue: props.selectedProduct.origin
+                  })(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={11} offset={2}>
                 <Form.Item label="Language (if applicable)">
-                  {getFieldDecorator("language")(<Input />)}
+                  {getFieldDecorator("language", {
+                    initialValue: props.selectedProduct.language
+                  })(<Input />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -184,21 +193,15 @@ const AddProduct = props => {
               <Col span={17}>
                 <Form.Item label="Description">
                   {getFieldDecorator("description", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please write a description",
-                        whitespace: true
-                      }
-                    ]
+                    initialValue: props.selectedProduct.description
                   })(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={6} offset={1}>
-                <Form.Item label="Price" required>
+                <Form.Item label="Price">
                   <span className="ant-form-text">€</span>
                   {getFieldDecorator("price", {
-                    initialValue: 10
+                    initialValue: props.selectedProduct.price
                   })(<InputNumber min={0} />)}
                 </Form.Item>
               </Col>
@@ -210,4 +213,4 @@ const AddProduct = props => {
   );
 };
 
-export default Form.create()(AddProduct);
+export default Form.create()(EditProduct);

@@ -1,22 +1,26 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Row, Col, Button, message } from "antd";
-import userContext from "../UserContext";
 import API from "../utils/API";
 
 const TopBar = props => {
-  const context = useContext(userContext);
-
   const addProductHandler = () => {
-    API.getLoginStatus().then(res => {
-      if (res.user.access_id > 1) {
-        props.setAddProductsVisible(true);
-      } else if (res.user.products_registered >= 50) {
-        message.error("You have reached the limit of 50 registered products");
-      } else if (res.user.products_registered < 50) {
-        props.setAddProductsVisible(true);
+    if (props.user.access_id > 1) {
+      props.setAddProductsVisible(true);
+    } else if (props.user.products_registered >= 50) {
+      message.error("You have reached the limit of 50 registered products");
+    } else if (props.user.products_registered < 50) {
+      props.setAddProductsVisible(true);
+    }
+  };
+
+  const logoutHandler = () => {
+    API.getLoggedOut().then(res => {
+      if ((res.status = 200)) {
+        props.setUser(res.data.user);
       }
     });
   };
+
   return (
     <div>
       <Row type="flex" justify="space-between">
@@ -30,7 +34,7 @@ const TopBar = props => {
           <Button>Change Ticketnumber</Button>
         </Col>
         <Col>
-          <Button onClick={e => context.getUserLogout(e)}>Logout</Button>
+          <Button onClick={logoutHandler}>Logout</Button>
         </Col>
       </Row>
     </div>

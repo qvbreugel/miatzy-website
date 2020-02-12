@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,79 +6,59 @@ import {
   Redirect
 } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import API from "./utils/API";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import About from "./pages/About";
 import NoMatch from "./pages/NoMatch";
-import TopNavbar from "./components/TopNavbar"; // WrappedWithRouter
-import UserContext from "./UserContext";
-import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
-/* eslint-disable no-console */
-import PrivateAccessRoute from "./components/PrivateAccessRoute";
 import Products from "./pages/Products";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.postUserLogin = userData => {
-      if (userData) {
-        API.postUserLogin(userData, (err, res) => {
-          if (err === true) {
-            return console.log("an error occurred failed to log user in.");
-          }
-          this.setState({ user: res.user });
-        });
+import API from "./utils/API";
+
+const App = () => {
+  const [currentUser, setCurrentUser] = useState({
+    user_id: 0,
+    username: "",
+    access_id: 0,
+    ticketnumber: "",
+    products_registered: 0
+  });
+
+  useEffect(() => {
+    API.getLoginStatus().then(res => {
+      if (res.user.access_id > 0) {
+        setCurrentUser(res.user);
       }
-    };
-    this.getUserLogout = event => {
-      event.preventDefault();
-      API.getLoggedOut().then(this.getUserStatus);
-    };
-    this.getUserStatus = () => {
-      API.getLoginStatus().then(res => {
-        if (res) {
-          this.setState({ user: res.user });
-        }
-      });
-    };
-    this.state = {
-      user: {
-        access_id: 0,
-        type: "Guest",
-        user_id: 0,
-        username: "guest"
-      },
-      getUserStatus: this.getUserStatus,
-      getUserLogout: this.getUserLogout,
-      postUserLogin: this.postUserLogin
-    };
-  }
-
-  componentDidMount() {
-    if (this.state.user.access_id === 0) {
-      this.getUserStatus();
-    }
-  }
-
-  render() {
-    const { user } = this.state;
-    return (
-      <UserContext.Provider value={this.state}>
-        <Router>
-          <div>
-            <Container>
-              <Switch>
-                <Route strict exact path="/" component={Login} />
-                <Route strict exact path="/register" component={Register} />
-                <Route strict exact path="/products" component={Products} />
-                <Route component={NoMatch} />
-              </Switch>
-            </Container>
-          </div>
-        </Router>
-      </UserContext.Provider>
-    );
-  }
-}
+    });
+  }, []);
+  return (
+    <Router>
+      <div>
+        <Container>
+          <Switch>
+            <Route
+              strict
+              exact
+              path="/"
+              render={props => <Login {...props} setUser={setCurrentUser} />}
+            />
+            <Route strict exact path="/register" component={Register} />
+            <Route
+              strict
+              exact
+              path="/products"
+              render={props => (
+                <Products
+                  {...props}
+                  user={currentUser}
+                  setUser={setCurrentUser}
+                />
+              )}
+            />
+            <Route component={NoMatch} />
+          </Switch>
+          {currentUser.access_id > 0 ? <Redirect to="/products" /> : null}
+        </Container>
+      </div>
+    </Router>
+  );
+};
 export default App;

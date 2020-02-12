@@ -17,7 +17,8 @@ const Login = props => {
         return console.log("an error occurred failed to log user in.");
       }
       if (res.user.access_id > 0) {
-        setLoginStatus(true);
+        props.setUser(res.user);
+        //setLoginStatus(true);
       }
     });
   };
