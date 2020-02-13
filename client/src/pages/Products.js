@@ -4,10 +4,14 @@ import ViewProducts from "../components/ViewProducts";
 import TopBar from "../components/TopBar";
 import { Redirect } from "react-router-dom";
 import EditProduct from "../components/EditProduct";
+import ChangeTicketnumber from "../components/ChangeTicketnumber";
 
 const Products = props => {
   const [addProductsVisible, setAddProductsVisible] = useState(false);
   const [editProductsVisible, setEditProductsVisible] = useState(false);
+  const [changeTicketnumberVisible, setChangeTicketnumberVisible] = useState(
+    false
+  );
   const [selectedProduct, setSelectedProduct] = useState({
     name: "",
     category: "",
@@ -28,6 +32,7 @@ const Products = props => {
         <TopBar
           addProductsVisible={addProductsVisible}
           setAddProductsVisible={setAddProductsVisible}
+          setChangeTicketnumberVisible={setChangeTicketnumberVisible}
           setUser={props.setUser}
           user={props.user}
         />
@@ -45,6 +50,11 @@ const Products = props => {
           user={props.user}
           toggleRefresh={toggleRefresh}
           selectedProduct={selectedProduct}
+        />
+        <ChangeTicketnumber
+          changeTicketnumberVisible={changeTicketnumberVisible}
+          setChangeTicketnumberVisible={setChangeTicketnumberVisible}
+          user={props.user}
         />
         <ViewProducts
           user={props.user}

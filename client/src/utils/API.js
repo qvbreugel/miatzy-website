@@ -143,5 +143,16 @@ export default {
     } catch (err) {
       return console.log(err);
     }
+  },
+  updateTicketnumber: async updatedTicketnumber => {
+    try {
+      const { ticketnumber, id } = updatedTicketnumber;
+      const res = await axios.post("/api/user/ticketnumber", {
+        vals: [ticketnumber, id]
+      });
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
   }
 };

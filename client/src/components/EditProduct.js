@@ -31,27 +31,27 @@ const EditProduct = props => {
       id: props.selectedProduct.id
     };
 
-    if (getFieldValue("name") != product.name) {
+    if (getFieldValue("name") !== product.name) {
       changesMade = true;
       product.name = getFieldValue("name");
     }
-    if (getFieldValue("category") != product.category) {
+    if (getFieldValue("category") !== product.category) {
       changesMade = true;
       product.category = getFieldValue("category");
     }
-    if (getFieldValue("origin") != product.origin) {
+    if (getFieldValue("origin") !== product.origin) {
       changesMade = true;
       product.origin = getFieldValue("origin");
     }
-    if (getFieldValue("language") != product.language) {
+    if (getFieldValue("language") !== product.language) {
       changesMade = true;
       product.language = getFieldValue("language");
     }
-    if (getFieldValue("description") != product.description) {
+    if (getFieldValue("description") !== product.description) {
       changesMade = true;
       product.description = getFieldValue("description");
     }
-    if (getFieldValue("price") != product.price) {
+    if (getFieldValue("price") !== product.price) {
       changesMade = true;
       product.price = getFieldValue("price");
     }

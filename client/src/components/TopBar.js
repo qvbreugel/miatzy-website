@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, message, Popconfirm } from "antd";
+import { Row, Col, Button, message } from "antd";
 import API from "../utils/API";
 
 const TopBar = props => {
@@ -34,7 +34,9 @@ const TopBar = props => {
           </Link>
         </Col>
         <Col>
-          <Button>Change Ticketnumber</Button>
+          <Button onClick={() => props.setChangeTicketnumberVisible(true)}>
+            Change Ticketnumber
+          </Button>
         </Col>
         <Col>
           <Button onClick={logoutHandler}>Logout</Button>

@@ -52,7 +52,7 @@ const Register = props => {
   const compareToUsernames = (rule, value, callback) => {
     if (value) {
       usernames.forEach(username => {
-        if (value == username) {
+        if (value === username) {
           callback("This username already exists");
         }
       });
@@ -64,7 +64,7 @@ const Register = props => {
   const compareToTicketnumbers = (rule, value, callback) => {
     if (value) {
       ticketnumbers.forEach(ticketnumber => {
-        if (value == ticketnumber) {
+        if (value === ticketnumber) {
           callback("This ticket number is already registered");
         }
       });
@@ -76,7 +76,7 @@ const Register = props => {
   const compareToEmails = (rule, value, callback) => {
     if (value) {
       emails.forEach(email => {
-        if (value == email) {
+        if (value === email) {
           callback("This email is already registered");
         }
       });

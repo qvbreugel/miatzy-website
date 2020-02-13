@@ -21,5 +21,6 @@ router
   .delete(userController.deleteUserById); // delete a user by ID
 
 router.route("/unique").get(userController.getUniqueValues);
+router.route("/ticketnumber").post(userController.updateTicketnumber);
 
 module.exports = router;

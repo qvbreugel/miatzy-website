@@ -65,5 +65,12 @@ module.exports = {
     db.User.selectUnique(data => {
       res.status(200).json(data);
     });
+  },
+  updateTicketnumber: (req, res) => {
+    const ticketData = req.body.vals;
+    console.log(ticketData);
+    db.User.updateTicketnumber(ticketData, result => {
+      res.status(200).json(result);
+    });
   }
 };

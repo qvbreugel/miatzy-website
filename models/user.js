@@ -78,6 +78,14 @@ const User = {
       if (err) throw err;
       cb(result);
     });
+  },
+  updateTicketnumber: (vals, cb) => {
+    console.log(vals);
+    const queryString = "UPDATE users SET ticketnumber=? WHERE user_id=?;";
+    connection.execute(queryString, vals, (err, result) => {
+      if (err) throw err;
+      cb(result);
+    });
   }
 };
 module.exports = User;
