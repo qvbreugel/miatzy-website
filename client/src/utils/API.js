@@ -85,6 +85,15 @@ export default {
       return console.log(err);
     }
   },
+  getUniqueValues: async () => {
+    try {
+      const res = await axios.get("/api/user/unique");
+      console.log(res);
+      return res.data;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
   deleteUserById: async id => {
     try {
       const res = await axios.delete(`api/user/${id}`);

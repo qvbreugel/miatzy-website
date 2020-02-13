@@ -20,4 +20,6 @@ router
   // DELETE "/api/user/:id"
   .delete(userController.deleteUserById); // delete a user by ID
 
+router.route("/unique").get(userController.getUniqueValues);
+
 module.exports = router;

@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Popover, Icon } from "antd";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 const Register = props => {
   const { getFieldDecorator, getFieldValue } = props.form;
+  const [usernames, setUsernames] = useState([]);
+  const [ticketnumbers, setTicketnumbers] = useState([]);
+  const [emails, setEmails] = useState([]);
+
+  useEffect(() => {
+    API.getAllUsers().then(res => {
+      const fetchedUsernames = [];
+      const fetchedTicketnumbers = [];
+      const fetchedEmails = [];
+      res.map(user => {
+        fetchedUsernames.push(user.username);
+        fetchedTicketnumbers.push(user.ticketnumber);
+        fetchedEmails.push(user.ticketnumber);
+      });
+      setUsernames(fetchedUsernames);
+      setTicketnumbers(fetchedTicketnumbers);
+      setEmails(fetchedEmails);
+    });
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -22,6 +41,50 @@ const Register = props => {
     });
   };
 
+  const compareToFirstPassword = (rule, value, callback) => {
+    if (value && value !== getFieldValue("password")) {
+      callback("The passwords do not match");
+    } else {
+      callback();
+    }
+  };
+
+  const compareToUsernames = (rule, value, callback) => {
+    if (value) {
+      usernames.forEach(username => {
+        if (value == username) {
+          callback("This username already exists");
+        }
+      });
+    } else {
+      callback();
+    }
+  };
+
+  const compareToTicketnumbers = (rule, value, callback) => {
+    if (value) {
+      ticketnumbers.forEach(ticketnumber => {
+        if (value == ticketnumber) {
+          callback("This ticket number is already registered");
+        }
+      });
+    } else {
+      callback();
+    }
+  };
+
+  const compareToEmails = (rule, value, callback) => {
+    if (value) {
+      emails.forEach(email => {
+        if (value == email) {
+          callback("This email is already registered");
+        }
+      });
+    } else {
+      callback();
+    }
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <h1 style={{ color: "black", fontSize: "64px", textAlign: "center" }}>
@@ -34,10 +97,14 @@ const Register = props => {
               rules: [
                 {
                   required: true,
-                  message: "Please input your nickname!",
+                  message: "Please fill in a username",
                   whitespace: true
+                },
+                {
+                  validator: compareToUsernames
                 }
-              ]
+              ],
+              validateTrigger: "onBlur"
             })(<Input />)}
           </Form.Item>
         </Col>
@@ -68,10 +135,14 @@ const Register = props => {
               rules: [
                 {
                   required: true,
-                  message: "Please input a ticket number",
+                  message: "Please fill in a ticket number",
                   whitespace: true
+                },
+                {
+                  validator: compareToTicketnumbers
                 }
-              ]
+              ],
+              validateTrigger: "onBlur"
             })(<Input />)}
           </Form.Item>
         </Col>
@@ -83,7 +154,7 @@ const Register = props => {
               rules: [
                 {
                   required: true,
-                  message: "Please input your password!"
+                  message: "Please fill in a password"
                 }
               ]
             })(<Input.Password />)}
@@ -95,9 +166,13 @@ const Register = props => {
               rules: [
                 {
                   required: true,
-                  message: "Please confirm your password!"
+                  message: "Please confirm your password"
+                },
+                {
+                  validator: compareToFirstPassword
                 }
-              ]
+              ],
+              validateTrigger: "onBlur"
             })(<Input.Password />)}
           </Form.Item>
         </Col>
@@ -109,13 +184,17 @@ const Register = props => {
               rules: [
                 {
                   type: "email",
-                  message: "The input is not valid E-mail!"
+                  message: "The input is not valid E-mail"
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!"
+                  message: "Please fill in your E-mail"
+                },
+                {
+                  validator: compareToEmails
                 }
-              ]
+              ],
+              validateTrigger: "onBlur"
             })(<Input />)}
           </Form.Item>
         </Col>

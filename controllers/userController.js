@@ -59,5 +59,11 @@ module.exports = {
     db.User.deleteOne(req.params.id, data => {
       res.status(200).json(data);
     });
+  },
+  getUniqueValues: (req, res) => {
+    console.log("Unique called");
+    db.User.selectUnique(data => {
+      res.status(200).json(data);
+    });
   }
 };

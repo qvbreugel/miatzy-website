@@ -4,9 +4,18 @@ const connection = require("../config/connection"); // import the connection fro
 const User = {
   selectAll: cb => {
     const queryString =
-      "SELECT u.user_id, u.username, u.access_id, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id ORDER BY u.user_id ASC;";
+      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, u.email,  a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id ORDER BY u.user_id ASC;";
     connection.query(queryString, (err, results) => {
       if (err) throw err;
+      cb(results);
+    });
+  },
+  selectUnique: cb => {
+    console.log("Unique Called");
+    const queryString = "SELECT username, ticketnumber, email FROM users";
+    connection.query(queryString, (err, results) => {
+      if (err) throw err;
+      console.log(results);
       cb(results);
     });
   },
