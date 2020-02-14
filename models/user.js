@@ -84,7 +84,14 @@ const User = {
     const queryString = "UPDATE users SET ticketnumber=? WHERE user_id=?;";
     connection.execute(queryString, vals, (err, result) => {
       if (err) throw err;
-      cb(result);
+      else {
+        const secondQueryString =
+          "UPDATE products SET ticketnumber = ? WHERE created_by_user = ?";
+        connection.execute(secondQueryString, vals, (err, result) => {
+          if (err) throw err;
+          cb(result);
+        });
+      }
     });
   }
 };

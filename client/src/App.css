@@ -1,1 +1,16 @@
 @import "~antd/dist/antd.css";
+
+.sticker {
+  border: 2px dotted black;
+  text-align: center;
+}
+
+.productName {
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+@page {
+  size: auto; /* auto is the initial value */
+  margin: 0mm; /* this affects the margin in the printer settings */
+}
