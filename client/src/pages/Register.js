@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Row, Col, Popover, Icon } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import API from "../utils/API";
 
 const Register = props => {
-  const { getFieldDecorator, getFieldValue } = props.form;
+  const {
+    getFieldDecorator,
+    getFieldValue,
+    validateFieldsAndScroll
+  } = props.form;
   const [usernames, setUsernames] = useState([]);
   const [ticketnumbers, setTicketnumbers] = useState([]);
   const [emails, setEmails] = useState([]);
+  const [accountCreated, setAccountCreated] = useState(false);
 
   useEffect(() => {
     API.getAllUsers().then(res => {
@@ -27,18 +32,38 @@ const Register = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const data = {
-          username: getFieldValue("username"),
-          password: getFieldValue("password"),
-          email: getFieldValue("email"),
-          ticketnumber: getFieldValue("ticketnumber"),
-          access_id: 1
-        };
-        API.postNewUser(data).then(res => console.log(res));
+    let errorsFound = false;
+    validateFieldsAndScroll((err, values) => {
+      if (err) {
+        errorsFound = true;
       }
     });
+    if (!errorsFound) {
+      const data = {
+        username: getFieldValue("username"),
+        password: getFieldValue("password"),
+        email: getFieldValue("email"),
+        ticketnumber: getFieldValue("ticketnumber"),
+        access_id: 1
+      };
+      API.postNewUser(data).then(res => {
+        if (res.status === 200) {
+          const loginData = {
+            username: getFieldValue("username"),
+            password: getFieldValue("password")
+          };
+          API.postUserLogin(loginData, (err, res) => {
+            if (err === true) {
+              return console.log("an error occurred failed to log user in.");
+            }
+            if (res.user.access_id > 0) {
+              props.setUser(res.user);
+              setAccountCreated(true);
+            }
+          });
+        }
+      });
+    }
   };
 
   const compareToFirstPassword = (rule, value, callback) => {
@@ -85,7 +110,9 @@ const Register = props => {
     }
   };
 
-  return (
+  return accountCreated ? (
+    <Redirect to="/products" />
+  ) : (
     <Form onSubmit={handleSubmit}>
       <h1 style={{ color: "black", fontSize: "64px", textAlign: "center" }}>
         Miatzy
@@ -149,7 +176,7 @@ const Register = props => {
       </Row>
       <Row justify="center" type="flex" gutter={[32]}>
         <Col span={6}>
-          <Form.Item label="Password" hasFeedback>
+          <Form.Item label="Password">
             {getFieldDecorator("password", {
               rules: [
                 {
@@ -161,7 +188,7 @@ const Register = props => {
           </Form.Item>
         </Col>
         <Col span={6}>
-          <Form.Item label="Confirm Password" hasFeedback>
+          <Form.Item label="Confirm Password">
             {getFieldDecorator("confirm", {
               rules: [
                 {

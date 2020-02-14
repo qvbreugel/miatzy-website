@@ -31,8 +31,6 @@ export default {
     }
   },
   postNewUser: async newUser => {
-    // Example POST: { "vals": ["test_user", "111111", 1] }
-    console.log(newUser);
     try {
       const { username, password, email, ticketnumber, access_id } = newUser;
       const res = await axios.post("/api/user", {
@@ -88,7 +86,6 @@ export default {
   getUniqueValues: async () => {
     try {
       const res = await axios.get("/api/user/unique");
-      console.log(res);
       return res.data;
     } catch (err) {
       return console.log(err);

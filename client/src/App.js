@@ -43,7 +43,12 @@ const App = () => {
                 <Login {...props} setUser={setCurrentUser} user={currentUser} />
               )}
             />
-            <Route strict exact path="/register" component={Register} />
+            <Route
+              strict
+              exact
+              path="/register"
+              render={props => <Register {...props} setUser={setCurrentUser} />}
+            />
             <Route
               strict
               exact
