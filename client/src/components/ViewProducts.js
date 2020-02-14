@@ -67,7 +67,6 @@ const ViewProducts = props => {
     API.getAllProductsById().then(res => {
       let fetchedProducts = [];
       res.map(product => {
-        console.log(product);
         product["key"] = product.id;
         fetchedProducts.push(product);
       });

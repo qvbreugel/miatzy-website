@@ -30,7 +30,7 @@ const TopBar = props => {
         </Col>
         <Col>
           <Link to="/print">
-            <Button>Print Barcodes</Button>
+            <Button disabled>Print Barcodes</Button>
           </Link>
         </Col>
         <Col>

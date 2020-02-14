@@ -206,6 +206,7 @@ const Register = props => {
               type="primary"
               htmlType="submit"
               className="register-form-button"
+              style={{ width: "100%" }}
             >
               Register
             </Button>
