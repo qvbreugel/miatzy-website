@@ -181,7 +181,7 @@ const AddProduct = props => {
               </Col>
             </Row>
             <Row>
-              <Col span={17}>
+              <Col span={14}>
                 <Form.Item
                   label={
                     <span>
@@ -195,12 +195,28 @@ const AddProduct = props => {
                   {getFieldDecorator("description")(<Input />)}
                 </Form.Item>
               </Col>
-              <Col span={6} offset={1}>
+              <Col span={4} offset={1}>
                 <Form.Item label="Price" required>
                   <span className="ant-form-text">€</span>
                   {getFieldDecorator("price", {
                     initialValue: 10
                   })(<InputNumber min={0} />)}
+                </Form.Item>
+              </Col>
+              <Col span={4} offset={1}>
+                <Form.Item
+                  label={
+                    <span>
+                      You will receive&nbsp;
+                      <Tooltip title="A 10% fee is deducted when selling through Miatzy">
+                        <Icon type="question-circle-o" />
+                      </Tooltip>
+                    </span>
+                  }
+                >
+                  <span className="ant-form-text">
+                    €{(getFieldValue("price") * 0.9).toFixed(2)}
+                  </span>
                 </Form.Item>
               </Col>
             </Row>
