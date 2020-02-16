@@ -22,7 +22,7 @@ const ViewProducts = props => {
 
   const columns = [
     {
-      title: "Name",
+      title: "Product",
       dataIndex: "name",
       key: "name"
     },

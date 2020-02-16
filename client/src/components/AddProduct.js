@@ -76,7 +76,7 @@ const AddProduct = props => {
           <Form onSubmit={handleSubmit}>
             <Row>
               <Col span={10}>
-                <Form.Item label="Product name">
+                <Form.Item label="Product">
                   {getFieldDecorator("name", {
                     rules: [
                       {
@@ -89,7 +89,7 @@ const AddProduct = props => {
                 </Form.Item>
               </Col>
               <Col span={13} offset={1}>
-                <Form.Item label="Select">
+                <Form.Item label="Product category">
                   {getFieldDecorator("category", {
                     rules: [
                       { required: true, message: "Please select a category" }
@@ -182,16 +182,17 @@ const AddProduct = props => {
             </Row>
             <Row>
               <Col span={17}>
-                <Form.Item label="Description">
-                  {getFieldDecorator("description", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please write a description",
-                        whitespace: true
-                      }
-                    ]
-                  })(<Input />)}
+                <Form.Item
+                  label={
+                    <span>
+                      Description&nbsp;
+                      <Tooltip title="Please provide extra information about the product such as scale, function, special remarks, etc.">
+                        <Icon type="question-circle-o" />
+                      </Tooltip>
+                    </span>
+                  }
+                >
+                  {getFieldDecorator("description")(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={6} offset={1}>
