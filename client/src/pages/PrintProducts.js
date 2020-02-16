@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Spin, Col, Row } from "antd";
+import { Spin, Col, Row, Typography } from "antd";
 import API from "../utils/API";
 import Barcode from "react-barcode";
 
 const PrintProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { Text } = Typography;
 
   useEffect(() => {
     API.getAllProductsById().then(res => {
@@ -28,10 +30,13 @@ const PrintProducts = () => {
         <Spin size="large" />
       ) : (
         products.map(product => (
-          <Col span={12}>
+          <Col span={8}>
             <div className="sticker">
-              <h3 className="productName">{product.name}</h3>
-              <p className="productDescription">{product.description}</p>
+              <Text>{product.name}</Text>
+              <br />
+              <Text type="secondary">
+                {product.ticketnumber}.{product.product_id}
+              </Text>
               <h2>&euro;{product.price.toFixed(2)}</h2>
               <Barcode
                 value={
