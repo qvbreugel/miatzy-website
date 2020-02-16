@@ -18,6 +18,7 @@ const AddProduct = props => {
   const {
     getFieldDecorator,
     getFieldValue,
+    setFieldsValue,
     resetFields,
     validateFields
   } = props.form;
@@ -60,6 +61,23 @@ const AddProduct = props => {
     props.toggleRefresh();
     props.setAddProductsVisible(false);
   };
+
+  const checkIfValidPrice = (rule, value, callback) => {
+    const splitPrice = value.split(".");
+    if (value % 1 !== 0) {
+      console.log(splitPrice[1]);
+      if (splitPrice[1] == 50) {
+        callback();
+      } else {
+        callback("Price can only be entered in whole or halve euros.");
+      }
+    } else {
+      callback();
+    }
+  };
+
+  const ten = 10;
+  const initialPrice = ten.toFixed(2);
 
   return (
     <Modal
@@ -199,8 +217,18 @@ const AddProduct = props => {
                 <Form.Item label="Price" required>
                   <span className="ant-form-text">€</span>
                   {getFieldDecorator("price", {
-                    initialValue: 10
-                  })(<InputNumber min={0} />)}
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please fill in a price",
+                        whitespace: true
+                      },
+                      {
+                        validator: checkIfValidPrice
+                      }
+                    ],
+                    initialValue: initialPrice
+                  })(<Input style={{ width: "80%" }} min={0} />)}
                 </Form.Item>
               </Col>
               <Col span={4} offset={1}>
