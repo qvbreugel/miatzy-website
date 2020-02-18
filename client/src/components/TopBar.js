@@ -34,6 +34,11 @@ const TopBar = props => {
           </Link>
         </Col>
         <Col>
+          <Link to="/printlist">
+            <Button>Print List</Button>
+          </Link>
+        </Col>
+        <Col>
           <Button onClick={() => props.setChangeTicketnumberVisible(true)}>
             Change Ticketnumber
           </Button>

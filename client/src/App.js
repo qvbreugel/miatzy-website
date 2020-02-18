@@ -8,6 +8,7 @@ import {
 import Container from "react-bootstrap/Container";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrintList from "./pages/PrintList";
 import NoMatch from "./pages/NoMatch";
 import "./App.css";
 import Products from "./pages/Products";
@@ -55,6 +56,18 @@ const App = () => {
               path="/products"
               render={props => (
                 <Products
+                  {...props}
+                  user={currentUser}
+                  setUser={setCurrentUser}
+                />
+              )}
+            />
+            <Route
+              strict
+              exact
+              path="/printlist"
+              render={props => (
+                <PrintList
                   {...props}
                   user={currentUser}
                   setUser={setCurrentUser}

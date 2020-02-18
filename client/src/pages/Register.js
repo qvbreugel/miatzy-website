@@ -40,12 +40,15 @@ const Register = props => {
     });
     if (!errorsFound) {
       const data = {
+        firstname: getFieldValue("firstname"),
+        lastname: getFieldValue("lastname"),
         username: getFieldValue("username"),
         password: getFieldValue("password"),
         email: getFieldValue("email"),
         ticketnumber: getFieldValue("ticketnumber"),
         access_id: 1
       };
+      console.log(data);
       API.postNewUser(data).then(res => {
         if (res.status === 200) {
           const loginData = {
@@ -117,6 +120,36 @@ const Register = props => {
       <h1 style={{ color: "black", fontSize: "64px", textAlign: "center" }}>
         Miatzy
       </h1>
+      <Row justify="center" type="flex" gutter={[32]}>
+        <Col span={6}>
+          <Form.Item label="First name">
+            {getFieldDecorator("firstname", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please fill in your first name",
+                  whitespace: true
+                }
+              ],
+              validateTrigger: "onBlur"
+            })(<Input />)}
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item label="Last name">
+            {getFieldDecorator("lastname", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please fill in your last name",
+                  whitespace: true
+                }
+              ],
+              validateTrigger: "onBlur"
+            })(<Input />)}
+          </Form.Item>
+        </Col>
+      </Row>
       <Row justify="center" type="flex" gutter={[32]}>
         <Col span={6}>
           <Form.Item label="Username">

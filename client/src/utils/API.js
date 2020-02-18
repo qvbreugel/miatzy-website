@@ -32,9 +32,25 @@ export default {
   },
   postNewUser: async newUser => {
     try {
-      const { username, password, email, ticketnumber, access_id } = newUser;
+      const {
+        firstname,
+        lastname,
+        username,
+        password,
+        email,
+        ticketnumber,
+        access_id
+      } = newUser;
       const res = await axios.post("/api/user", {
-        vals: [username, password, email, ticketnumber, access_id]
+        vals: [
+          firstname,
+          lastname,
+          username,
+          password,
+          email,
+          ticketnumber,
+          access_id
+        ]
       });
       console.log(res);
       return res;
@@ -103,6 +119,7 @@ export default {
   getAllProductsById: async () => {
     try {
       const res = await axios.get("/api/product");
+      console.log(res.data);
       return res.data;
     } catch (err) {
       return console.log(err);

@@ -62,6 +62,7 @@ const Products = props => {
           toggleRefresh={toggleRefresh}
           setEditProductsVisible={setEditProductsVisible}
           setSelectedProduct={setSelectedProduct}
+          type="view"
         />
       </div>
     );

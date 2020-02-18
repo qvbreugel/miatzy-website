@@ -4,7 +4,7 @@ const connection = require("../config/connection"); // import the connection fro
 const User = {
   selectAll: cb => {
     const queryString =
-      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, u.email,  a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id ORDER BY u.user_id ASC;";
+      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, u.email, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id ORDER BY u.user_id ASC;";
     connection.query(queryString, (err, results) => {
       if (err) throw err;
       cb(results);
@@ -31,7 +31,7 @@ const User = {
   },
   getUserById: (id, done) => {
     const queryString =
-      "SELECT u.user_id, u.username, u.access_id, u.ticketnumber, u.products_registered, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
+      "SELECT u.user_id, u.username, u.firstname, u.lastname, u.access_id, u.ticketnumber, u.products_registered, a.type FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE user_id=? LIMIT 1;";
     connection.execute(queryString, [id], (err, user) => {
       if (err) {
         return done(err, user);
@@ -63,8 +63,9 @@ const User = {
     });
   },
   insertOne: (vals, cb) => {
+    console.log(vals);
     const queryString =
-      "INSERT INTO users (username, password, email, ticketnumber, access_id) VALUES (?,?,?,?,?)";
+      "INSERT INTO users (firstname, lastname, username, password, email, ticketnumber, access_id) VALUES (?,?,?,?,?,?,?)";
     connection.execute(queryString, vals, (err, result) => {
       if (err) throw err;
       cb(result);
