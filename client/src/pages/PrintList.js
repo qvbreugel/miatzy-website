@@ -29,6 +29,9 @@ const PrintProducts = props => {
             </h2>
           </Col>
           <Col>
+            <Barcode value={props.user.ticketnumber} displayValue="false" />
+          </Col>
+          <Col>
             <h2 style={{ marginRight: "16px" }}>
               Ticketnumber: {props.user.ticketnumber}
             </h2>
