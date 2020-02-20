@@ -23,6 +23,7 @@ const AddProduct = props => {
     validateFields
   } = props.form;
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const productsAdded = props.user.products_registered;
 
   const handleSubmit = () => {
     setConfirmLoading(true);
@@ -40,7 +41,8 @@ const AddProduct = props => {
         };
         API.postNewProduct(productData).then(res => {
           if ((res.status = 200)) {
-            const productsLeft = 50 - (props.user.products_registered + 1);
+            productsAdded += 1;
+            const productsLeft = 50 - productsAdded;
             resetFields();
             setConfirmLoading(false);
             if (props.user.access_id > 1) {
@@ -67,6 +69,8 @@ const AddProduct = props => {
     if (value % 1 !== 0) {
       console.log(splitPrice[1]);
       if (splitPrice[1] == 50) {
+        callback();
+      } else if (splitPrice[1] == 5) {
         callback();
       } else {
         callback("Price can only be entered in whole or halve euros.");

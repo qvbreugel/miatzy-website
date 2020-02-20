@@ -21,7 +21,7 @@ const User = {
   },
   getUserByUsernameWithPassword: (username, done) => {
     const queryString =
-      "SELECT u.user_id, u.username,u.password, u.access_id, a.type, u.ticketnumber, u.products_registered FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE username=? LIMIT 1;";
+      "SELECT u.user_id, u.username, u.firstname, u.username,u.password, u.access_id, a.type, u.ticketnumber, u.products_registered FROM users AS u INNER JOIN access_levels AS a ON u.access_id=a.access_id WHERE username=? LIMIT 1;";
     connection.execute(queryString, [username], (err, user) => {
       if (err) {
         return done(err, user);

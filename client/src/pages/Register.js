@@ -22,7 +22,7 @@ const Register = props => {
       res.map(user => {
         fetchedUsernames.push(user.username);
         fetchedTicketnumbers.push(user.ticketnumber);
-        fetchedEmails.push(user.ticketnumber);
+        fetchedEmails.push(user.email);
       });
       setUsernames(fetchedUsernames);
       setTicketnumbers(fetchedTicketnumbers);

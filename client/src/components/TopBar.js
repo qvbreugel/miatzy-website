@@ -29,12 +29,12 @@ const TopBar = props => {
           <Button onClick={addProductHandler}>Add Product</Button>
         </Col>
         <Col>
-          <Link to="/print">
+          <Link to="/print" target="_blank">
             <Button>Print Barcodes</Button>
           </Link>
         </Col>
         <Col>
-          <Link to="/printlist">
+          <Link to="/printlist" target="_blank">
             <Button>Print List</Button>
           </Link>
         </Col>

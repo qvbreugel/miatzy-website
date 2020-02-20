@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Divider, Popconfirm, message } from "antd";
+import { Checkbox, Table, Divider, Popconfirm, message } from "antd";
 import API from "../utils/API";
 
 const ViewProducts = props => {
@@ -60,6 +60,11 @@ const ViewProducts = props => {
     pagination = false;
     columns.pop();
     columns.splice(2, 2);
+    columns.push({
+      title: "Unsold",
+      key: "unsold",
+      render: () => <Checkbox />
+    });
   }
 
   const deleteProduct = product => {
