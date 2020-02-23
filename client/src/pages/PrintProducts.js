@@ -32,9 +32,7 @@ const PrintProducts = () => {
         products.map(product => (
           <Col span={8}>
             <div className="sticker">
-              <Text>{product.name}</Text>
-              <br />
-              <Text type="secondary">
+              <Text>
                 {product.ticketnumber}.{product.product_id}
               </Text>
               <h2>&euro;{product.price.toFixed(2)}</h2>
