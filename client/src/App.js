@@ -14,6 +14,7 @@ import "./App.css";
 import Products from "./pages/Products";
 import API from "./utils/API";
 import PrintProducts from "./pages/PrintProducts";
+import Expired from "./pages/Expired";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
@@ -75,6 +76,7 @@ const App = () => {
               )}
             />
             <Route strict exact path="/print" component={PrintProducts} />
+            <Route strict exact path="/expired" component={Expired} />
             <Route component={NoMatch} />
           </Switch>
         </Container>

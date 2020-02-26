@@ -23,7 +23,7 @@ const TopBar = props => {
   };
 
   return (
-    <div>
+    <div style={{ height: "12vh" }}>
       <Row type="flex" justify="space-between">
         <Col>
           <Button onClick={addProductHandler}>Add Product</Button>

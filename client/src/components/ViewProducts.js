@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Table, Divider, Popconfirm, message } from "antd";
+import {
+  Checkbox,
+  Table,
+  Divider,
+  Popconfirm,
+  message,
+  Typography
+} from "antd";
 import API from "../utils/API";
+
+const { Text } = Typography;
 
 const ViewProducts = props => {
   const [products, setProducts] = useState([]);
@@ -30,7 +39,7 @@ const ViewProducts = props => {
       title: "Price",
       key: "price",
       dataIndex: "price",
-      render: (text, record) => <p>€{text.toFixed(2)}</p>
+      render: (text, record) => <Text>€{text.toFixed(2)}</Text>
     },
     {
       title: "Action",
@@ -52,18 +61,19 @@ const ViewProducts = props => {
       )
     }
   ];
-
-  let pagination = { position: "bottom" };
-  let actionSpan = 1;
-
+  let size = "default";
+  let scroll = { y: "80vh" };
   if (props.type === "print") {
-    pagination = false;
+    size = "small";
+    scroll = "";
     columns.pop();
     columns.splice(2, 2);
     columns.push({
       title: "Unsold",
       key: "unsold",
-      render: () => <Checkbox />
+      render: () => (
+        <div className="checkbox">{<Checkbox className="checkbox" />}</div>
+      )
     });
   }
 
@@ -101,9 +111,10 @@ const ViewProducts = props => {
     <Table
       columns={columns}
       dataSource={products}
-      pagination={pagination}
+      pagination={false}
       loading={props.loading}
-      scroll={{ y: 512 }}
+      scroll={scroll}
+      size={size}
     />
   );
 };

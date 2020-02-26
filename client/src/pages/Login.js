@@ -17,8 +17,13 @@ const Login = props => {
         return console.log("an error occurred failed to log user in.");
       }
       if (res.user.access_id > 0) {
-        console.log(res.user);
         props.setUser(res.user);
+        setTimeout(() => {
+          console.log("Log out");
+          API.getLoggedOut().then(res => {
+            props.setUser(res.data.user);
+          });
+        }, 7200000);
       }
     });
   };

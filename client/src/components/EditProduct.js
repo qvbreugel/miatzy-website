@@ -101,62 +101,67 @@ const EditProduct = props => {
                     initialValue: props.selectedProduct.category
                   })(
                     <Select placeholder="Please select a category">
-                      <Option value="Figures - Scaled Figures">
-                        Figures - Scaled Figures
+                      <Option value="Books - Artbook">Books - Artbook</Option>
+                      <Option value="Books - Doujinji">Books - Doujinji</Option>
+                      <Option value="Books - Light Novel">
+                        Books - Light Novel
                       </Option>
-                      <Option value="Figures - Trading figures">
-                        Figures - Trading figures
+                      <Option value="Books - Magazine">Books - Magazine</Option>
+                      <Option value="Books - Manga">Books - Manga</Option>
+                      <Option value="Books - Other">Books - Other</Option>
+                      <Option value="Cosplay - Accessoires">
+                        Cosplay - Accessories
                       </Option>
+                      <Option value="Cosplay - Clothing">
+                        Cosplay - Clothing
+                      </Option>
+                      <Option value="Cosplay - Wigs">Cosplay - Wigs</Option>
                       <Option value="Figures - Action figures (figma/nedoroid)">
                         Figures - Action figures (figma/nedoroid)
                       </Option>
                       <Option value="Figures - Garage kits">
                         Figures - Garage kits
                       </Option>
-                      <Option value="Cosplay - Clothing">
-                        Cosplay - Clothing
+                      <Option value="Figures - Scaled Figures">
+                        Figures - Scaled Figures
                       </Option>
-                      <Option value="Cosplay - Accessoires">
-                        Cosplay - Accessories
+                      <Option value="Figures - Trading figures">
+                        Figures - Trading figures
                       </Option>
-                      <Option value="Cosplay - Wigs">Cosplay - Wigs</Option>
-                      <Option value="Hanged - Small (posters/wallscrolls/clocks/etc.)">
-                        Hanged - Small (posters/wallscrolls/clocks/etc.)
-                      </Option>
-                      <Option value="Hanged - Big (posters/wallscrolls/clocks/etc.)">
-                        Hanged - Big (keychains/etc.)
-                      </Option>
-                      <Option value="Media - Blu-Ray">Media - Blu-Ray</Option>
-                      <Option value="Media - DVD">Media - DVD</Option>
-                      <Option value="Media - CD">Media - CD</Option>
-                      <Option value="Games/Consoles - made for Nintendo console">
-                        Games/Consoles - made for Nintendo console
+                      <Option value="Fluffy - Pillows/Pluche">
+                        Fluffy - Pillows/Pluche
                       </Option>
                       <Option value="Games/Consoles - made for Microsoft console">
                         Games/Consoles - made for Microsoft console
                       </Option>
-                      <Option value="Games/Consoles - made for Sony console">
-                        Games/Consoles - made for Sony console
+                      <Option value="Games/Consoles - made for Nintendo console">
+                        Games/Consoles - made for Nintendo console
                       </Option>
                       <Option value="Games/Consoles - made for PC">
                         Games/Consoles - made for PC
                       </Option>
-                      <Option value="Books - Manga">Books - Manga</Option>
-                      <Option value="Books - Artbook">Books - Artbook</Option>
-                      <Option value="Books - Magazine">Books - Magazine</Option>
-                      <Option value="Books - Doujinji">Books - Doujinji</Option>
-                      <Option value="Fluffy - Pillows/Pluche">
-                        Fluffy - Pillows/Pluche
+
+                      <Option value="Games/Consoles - made for Sony console">
+                        Games/Consoles - made for Sony console
                       </Option>
+                      <Option value="Hanged - Big (posters/wallscrolls/clocks/etc.)">
+                        Hanged - Big (posters/wallscrolls/clocks/etc.)
+                      </Option>
+                      <Option value="Hanged - Small (keychains/etc.)">
+                        Hanged - Small (keychains/etc.)
+                      </Option>
+                      <Option value="Media - Blu-Ray">Media - Blu-Ray</Option>
+                      <Option value="Media - CD">Media - CD</Option>
+                      <Option value="Media - DVD">Media - DVD</Option>
+                      <Option value="Other - Buttons">Other - Buttons</Option>
                       <Option value="Other - Clear files">
                         Other - Clear files
                       </Option>
-                      <Option value="Other - Trading cards">
-                        Other - Trading cards
-                      </Option>
-                      <Option value="Other - Buttons">Other - Buttons</Option>
                       <Option value="Other - Phone accessories">
                         Other - Phone accessories
+                      </Option>
+                      <Option value="Other - Trading cards">
+                        Other - Trading cards
                       </Option>
                       <Option value="Other - Other">Other - Other</Option>
                     </Select>

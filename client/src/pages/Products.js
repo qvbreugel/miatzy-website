@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddProduct from "../components/AddProduct";
 import ViewProducts from "../components/ViewProducts";
 import TopBar from "../components/TopBar";
 import { Redirect } from "react-router-dom";
 import EditProduct from "../components/EditProduct";
 import ChangeTicketnumber from "../components/ChangeTicketnumber";
+import { notification, message } from "antd";
 
 const Products = props => {
   const [addProductsVisible, setAddProductsVisible] = useState(false);
@@ -25,6 +26,15 @@ const Products = props => {
   const toggleRefresh = () => {
     setRefreshToggle(!refreshToggle);
   };
+
+  useEffect(() => {
+    notification.warning({
+      message: "Signup period",
+      description:
+        "Products can only be added until May 1 20:00. All products added after that date, will not be accepted at the convention.",
+      duration: 0
+    });
+  }, []);
 
   if (props.user.access_id > 0) {
     return (
