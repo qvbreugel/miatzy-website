@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Icon, Input, Button, Row, Col } from "antd";
+import { Form, Icon, Input, Button, Row, Col, notification } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import API from "../utils/API";
 
@@ -18,6 +18,14 @@ const Login = props => {
       }
       if (res.user.access_id > 0) {
         props.setUser(res.user);
+        setTimeout(() => {
+          notification.warning({
+            message: "Closing date",
+            description:
+              "You cannot add products after May 1, 20:00. At that moment, product submissions will be closed. Any unregistered products cannot be sold at the convention.",
+            duration: 0
+          });
+        }, 5000);
         setTimeout(() => {
           console.log("Log out");
           API.getLoggedOut().then(res => {
