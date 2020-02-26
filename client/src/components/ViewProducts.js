@@ -103,6 +103,7 @@ const ViewProducts = props => {
       dataSource={products}
       pagination={pagination}
       loading={props.loading}
+      scroll={{ y: 512 }}
     />
   );
 };

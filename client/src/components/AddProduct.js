@@ -23,7 +23,7 @@ const AddProduct = props => {
     validateFields
   } = props.form;
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const productsAdded = props.user.products_registered;
+  let productsAdded = props.user.products_registered;
 
   const handleSubmit = () => {
     setConfirmLoading(true);
@@ -137,11 +137,11 @@ const AddProduct = props => {
                         Cosplay - Accessories
                       </Option>
                       <Option value="Cosplay - Wigs">Cosplay - Wigs</Option>
-                      <Option value="Hanged - Small (posters/wallscrolls/clocks/etc.)">
-                        Hanged - Small (posters/wallscrolls/clocks/etc.)
-                      </Option>
                       <Option value="Hanged - Big (posters/wallscrolls/clocks/etc.)">
-                        Hanged - Big (keychains/etc.)
+                        Hanged - Big (posters/wallscrolls/clocks/etc.)
+                      </Option>
+                      <Option value="Hanged - Small (keychains/etc.)">
+                        Hanged - Small (keychains/etc.)
                       </Option>
                       <Option value="Media - Blu-Ray">Media - Blu-Ray</Option>
                       <Option value="Media - DVD">Media - DVD</Option>
@@ -162,6 +162,7 @@ const AddProduct = props => {
                       <Option value="Books - Artbook">Books - Artbook</Option>
                       <Option value="Books - Magazine">Books - Magazine</Option>
                       <Option value="Books - Doujinji">Books - Doujinji</Option>
+                      <Option value="Books - Other">Books - Other</Option>
                       <Option value="Fluffy - Pillows/Pluche">
                         Fluffy - Pillows/Pluche
                       </Option>
@@ -208,7 +209,7 @@ const AddProduct = props => {
                   label={
                     <span>
                       Description&nbsp;
-                      <Tooltip title="Please provide extra information about the product such as scale, function, special remarks, etc.">
+                      <Tooltip title="Provide extra information about the product such as scale, function, special remarks, etc. (when necessary)">
                         <Icon type="question-circle-o" />
                       </Tooltip>
                     </span>
@@ -235,22 +236,26 @@ const AddProduct = props => {
                   })(<Input style={{ width: "80%" }} min={0} />)}
                 </Form.Item>
               </Col>
-              <Col span={4} offset={1}>
-                <Form.Item
-                  label={
-                    <span>
-                      You will receive&nbsp;
-                      <Tooltip title="A 10% fee is deducted when selling through Miatzy">
-                        <Icon type="question-circle-o" />
-                      </Tooltip>
+              {props.user.access_id < 2 ? (
+                <Col span={4} offset={1}>
+                  <Form.Item
+                    label={
+                      <span>
+                        You will receive&nbsp;
+                        <Tooltip title="A 10% fee is deducted when selling through Miatzy">
+                          <Icon type="question-circle-o" />
+                        </Tooltip>
+                      </span>
+                    }
+                  >
+                    <span className="ant-form-text">
+                      €{(getFieldValue("price") * 0.9).toFixed(2)}
                     </span>
-                  }
-                >
-                  <span className="ant-form-text">
-                    €{(getFieldValue("price") * 0.9).toFixed(2)}
-                  </span>
-                </Form.Item>
-              </Col>
+                  </Form.Item>
+                </Col>
+              ) : (
+                ""
+              )}
             </Row>
           </Form>
         </Col>

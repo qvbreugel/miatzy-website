@@ -32,21 +32,11 @@ const PrintProducts = () => {
         products.map(product => (
           <Col span={8}>
             <div className="sticker">
-              <Text>
-                {product.ticketnumber}.{product.product_id}
-              </Text>
               <h2>&euro;{product.price.toFixed(2)}</h2>
               <Barcode
-                value={
-                  product.ticketnumber +
-                  "." +
-                  product.product_id +
-                  " " +
-                  "EUR" +
-                  product.price
-                }
-                width={1}
-                displayValue="false"
+                value={product.ticketnumber + "." + product.product_id}
+                width={1.7}
+                displayValue="true"
               />
             </div>
           </Col>
