@@ -27,15 +27,6 @@ const Products = props => {
     setRefreshToggle(!refreshToggle);
   };
 
-  useEffect(() => {
-    notification.warning({
-      message: "Signup period",
-      description:
-        "Products can only be added until May 1 20:00. All products added after that date, will not be accepted at the convention.",
-      duration: 0
-    });
-  }, []);
-
   if (props.user.access_id > 0) {
     return (
       <div>
