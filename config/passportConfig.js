@@ -22,7 +22,7 @@ module.exports = passport => {
         console.log(
           `Pass port use local-strategy sign in attempt for: ${username}`
         );
-        if (!req.user && (!username === "" || password.length >= 5)) {
+        if (!req.user && (!username === "" || password.length >= 2)) {
           // callback with username and password from client must match basic requirements before even being compared in DB
 
           console.log("attempting to get user from DB");

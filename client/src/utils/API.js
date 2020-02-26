@@ -18,7 +18,6 @@ export default {
         : done(false, "error logging in");
     } catch (err) {
       console.log(err);
-      console.log("serverside error thrown failed log in attempt");
       return done(true, false);
     }
   },

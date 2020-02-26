@@ -6,14 +6,18 @@ import API from "../utils/API";
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, validateFieldsAndScroll } = props.form;
 
   const handleSubmit = event => {
     event.preventDefault();
     const userData = { username: username, password: password };
     API.postUserLogin(userData, (err, res) => {
       if (err === true) {
+        console.log(res);
+        setError(true);
+        validateFieldsAndScroll();
         return console.log("an error occurred failed to log user in.");
       }
       if (res.user.access_id > 0) {
@@ -36,6 +40,16 @@ const Login = props => {
     });
   };
 
+  const checkLoginInfo = (rule, value, callback) => {
+    if (error) {
+      callback(
+        "An error ocurred while trying to login. Please check your username and password"
+      );
+    } else {
+      callback();
+    }
+  };
+
   return props.user.access_id > 0 ? (
     <Redirect to="/products" />
   ) : (
@@ -49,7 +63,10 @@ const Login = props => {
             <Form.Item>
               {getFieldDecorator("username", {
                 rules: [
-                  { required: true, message: "Please input your username" }
+                  { required: true, message: "Please input your username" },
+                  {
+                    validator: checkLoginInfo
+                  }
                 ]
               })(
                 <Input
