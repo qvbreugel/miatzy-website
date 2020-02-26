@@ -37,7 +37,7 @@ const PrintProducts = () => {
                 value={product.ticketnumber + "." + product.product_id}
                 width={1.7}
                 displayValue="true"
-                height="90"
+                height="45"
               />
             </div>
           </Col>
