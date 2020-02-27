@@ -44,6 +44,7 @@ const Products = props => {
           supportVisible={supportVisible}
           setSupportVisible={setSupportVisible}
           user={props.user}
+          setUser={props.setUser}
         />
 
         <AddProduct

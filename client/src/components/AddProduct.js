@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -22,7 +22,14 @@ const AddProduct = props => {
     validateFields
   } = props.form;
   const [confirmLoading, setConfirmLoading] = useState(false);
-  let productsAdded = props.user.products_registered;
+  const [productsAdded, setProductsAdded] = useState(0);
+
+  useEffect(() => {
+    if (props.addProductsVisible) {
+      console.log(props.user.products_registered);
+      setProductsAdded(props.user.products_registered);
+    }
+  }, [props.addProductsVisible]);
 
   const handleSubmit = () => {
     setConfirmLoading(true);
@@ -46,8 +53,7 @@ const AddProduct = props => {
           };
           API.postNewProduct(productData).then(res => {
             if ((res.status = 200)) {
-              productsAdded += 1;
-              const productsLeft = 48 - productsAdded;
+              const productsLeft = 48 - (productsAdded + 1);
               resetFields();
               setConfirmLoading(false);
               if (props.user.access_id > 1) {
@@ -56,6 +62,7 @@ const AddProduct = props => {
                 message.success(
                   `The product has been added. You can still add ${productsLeft} products.`
                 );
+                setProductsAdded(productsAdded + 1);
               }
             }
           });
@@ -67,6 +74,9 @@ const AddProduct = props => {
   };
 
   const handleCancel = () => {
+    const newUser = props.user;
+    newUser.products_registered = productsAdded;
+    props.setUser(newUser);
     props.toggleRefresh();
     props.setAddProductsVisible(false);
   };
@@ -99,6 +109,7 @@ const AddProduct = props => {
       title="Add Product"
       okText="Add"
       width={720}
+      destroyOnClose
     >
       <Row>
         <Col span={24}>
