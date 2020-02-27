@@ -13,6 +13,7 @@ const { Text } = Typography;
 
 const ViewProducts = props => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const columns = [
     {
@@ -94,16 +95,20 @@ const ViewProducts = props => {
 
   useEffect(() => {
     API.getAllProductsById().then(res => {
-      let fetchedProducts = [];
-      console.log(res);
-      res.map((product, index) => {
-        product["key"] = product.id;
-        product["number"] = index + 1;
-        fetchedProducts.push(product);
-      });
-      setProducts(fetchedProducts);
-      if (props.type === "print") {
-        props.setLoading(false);
+      console.log(typeof res);
+      if (typeof res !== "undefined") {
+        setLoading(false);
+        let fetchedProducts = [];
+        console.log(res);
+        res.map((product, index) => {
+          product["key"] = product.id;
+          product["number"] = index + 1;
+          fetchedProducts.push(product);
+        });
+        setProducts(fetchedProducts);
+        if (props.type === "print") {
+          props.setLoading(false);
+        }
       }
     });
   }, [props.refreshToggle]);
@@ -115,6 +120,7 @@ const ViewProducts = props => {
       loading={props.loading}
       scroll={scroll}
       size={size}
+      loading={loading}
     />
   );
 };
