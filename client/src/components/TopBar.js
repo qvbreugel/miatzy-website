@@ -32,13 +32,33 @@ const TopBar = props => {
           justifyContent: "center"
         }}
       >
-        <h1 style={{ marginRight: "auto", fontSize: 32, marginLeft: 16 }}>
+        <h1
+          style={{
+            marginRight: "auto",
+            fontSize: 32,
+            marginLeft: 16,
+            marginTop: 12
+          }}
+        >
           Miatzy Bring &#38; Buy{" "}
           <Icon
             style={{ fontSize: 18, cursor: "pointer" }}
             type="question-circle"
             onClick={() => props.setSupportVisible(true)}
           />
+          <p
+            style={{
+              fontSize: 12,
+              fontWeight: 300,
+              marginLeft: 2,
+              marginTop: -10
+            }}
+          >
+            Built proudly by{" "}
+            <a href="https://cactusweb.dev/" target="_blank">
+              Cactus Web Development <span style={{ fontSize: 16 }}>🌵</span>
+            </a>
+          </p>
         </h1>
 
         <Row type="flex" justify="center" align="bottom" gutter={16}>
