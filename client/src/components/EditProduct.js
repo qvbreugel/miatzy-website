@@ -60,6 +60,9 @@ const EditProduct = props => {
         if ((res.status = 200)) {
           setConfirmLoading(false);
           message.success(`The product has been edited.`);
+          resetFields();
+          props.toggleRefresh();
+          props.setEditProductsVisible(false);
         }
       });
     } else {

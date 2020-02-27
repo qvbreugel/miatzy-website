@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, message } from "antd";
+import { Row, Col, Button, message, Icon } from "antd";
 import API from "../utils/API";
 
 const TopBar = props => {
@@ -33,8 +33,14 @@ const TopBar = props => {
         }}
       >
         <h1 style={{ marginRight: "auto", fontSize: 32, marginLeft: 16 }}>
-          Miatzy Bring &#38; Buy
+          Miatzy Bring &#38; Buy{" "}
+          <Icon
+            style={{ fontSize: 18, cursor: "pointer" }}
+            type="question-circle"
+            onClick={() => props.setSupportVisible(true)}
+          />
         </h1>
+
         <Row type="flex" justify="center" align="bottom" gutter={16}>
           <Col>
             <Button icon="plus" onClick={addProductHandler}>

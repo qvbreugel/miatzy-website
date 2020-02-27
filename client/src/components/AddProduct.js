@@ -27,37 +27,44 @@ const AddProduct = props => {
 
   const handleSubmit = () => {
     setConfirmLoading(true);
-    validateFields((errors, values) => {
-      if (!errors) {
-        const productData = {
-          name: getFieldValue("name"),
-          category: getFieldValue("category"),
-          origin: getFieldValue("origin"),
-          language: getFieldValue("language"),
-          description: getFieldValue("description"),
-          price: getFieldValue("price"),
-          ticketnumber: props.user.ticketnumber,
-          created_by_user: props.user.user_id
-        };
-        API.postNewProduct(productData).then(res => {
-          if ((res.status = 200)) {
-            productsAdded += 1;
-            const productsLeft = 50 - productsAdded;
-            resetFields();
-            setConfirmLoading(false);
-            if (props.user.access_id > 1) {
-              message.success(`The product has been added.`);
-            } else {
-              message.success(
-                `The product has been added. You can still add ${productsLeft} products.`
-              );
+    if (productsAdded >= 24) {
+      message.error(
+        "You've already added 48 products. You cannot add anymore products."
+      );
+      setConfirmLoading(false);
+    } else {
+      validateFields((errors, values) => {
+        if (!errors) {
+          const productData = {
+            name: getFieldValue("name"),
+            category: getFieldValue("category"),
+            origin: getFieldValue("origin"),
+            language: getFieldValue("language"),
+            description: getFieldValue("description"),
+            price: getFieldValue("price"),
+            ticketnumber: props.user.ticketnumber,
+            created_by_user: props.user.user_id
+          };
+          API.postNewProduct(productData).then(res => {
+            if ((res.status = 200)) {
+              productsAdded += 1;
+              const productsLeft = 48 - productsAdded;
+              resetFields();
+              setConfirmLoading(false);
+              if (props.user.access_id > 1) {
+                message.success(`The product has been added.`);
+              } else {
+                message.success(
+                  `The product has been added. You can still add ${productsLeft} products.`
+                );
+              }
             }
-          }
-        });
-      } else {
-        setConfirmLoading(false);
-      }
-    });
+          });
+        } else {
+          setConfirmLoading(false);
+        }
+      });
+    }
   };
 
   const handleCancel = () => {
@@ -106,6 +113,11 @@ const AddProduct = props => {
                         required: true,
                         message: "Please input the name the your product",
                         whitespace: true
+                      },
+                      {
+                        max: 64,
+                        message:
+                          "Product name cannot be longer than 64 characters."
                       }
                     ]
                   })(<Input />)}
@@ -199,12 +211,27 @@ const AddProduct = props => {
                     </span>
                   }
                 >
-                  {getFieldDecorator("origin")(<Input />)}
+                  {getFieldDecorator("origin", {
+                    rules: [
+                      {
+                        max: 256,
+                        message: "Origin cannot be longer than 256 characters."
+                      }
+                    ]
+                  })(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={11} offset={2}>
                 <Form.Item label="Language (if applicable)">
-                  {getFieldDecorator("language")(<Input />)}
+                  {getFieldDecorator("language", {
+                    rules: [
+                      {
+                        max: 128,
+                        message:
+                          "Language cannot be longer than 128 characters."
+                      }
+                    ]
+                  })(<Input />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -220,7 +247,15 @@ const AddProduct = props => {
                     </span>
                   }
                 >
-                  {getFieldDecorator("description")(<Input />)}
+                  {getFieldDecorator("description", {
+                    rules: [
+                      {
+                        max: 256,
+                        message:
+                          "Description cannot be longer than 256 characters."
+                      }
+                    ]
+                  })(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={4} offset={1}>

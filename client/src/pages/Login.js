@@ -29,6 +29,12 @@ const Login = props => {
               "You cannot add products after May 1, 20:00. At that moment, product submissions will be closed. Any unregistered products cannot be sold at the convention.",
             duration: 0
           });
+          notification.info({
+            message: "In development",
+            description:
+              "The application you're using in still in development. Some errors may still be present and crashes could occur. Use the question mark next to the miatzy title if you'd like to report an error, crash or just want to ask a question.",
+            duration: 0
+          });
         }, 5000);
         setTimeout(() => {
           console.log("Log out");

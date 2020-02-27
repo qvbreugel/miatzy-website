@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddProduct from "../components/AddProduct";
 import ViewProducts from "../components/ViewProducts";
+import SupportModal from "../components/SupportModal";
 import TopBar from "../components/TopBar";
 import { Redirect } from "react-router-dom";
 import EditProduct from "../components/EditProduct";
@@ -10,6 +11,7 @@ import { notification, message } from "antd";
 const Products = props => {
   const [addProductsVisible, setAddProductsVisible] = useState(false);
   const [editProductsVisible, setEditProductsVisible] = useState(false);
+  const [supportVisible, setSupportVisible] = useState(false);
   const [changeTicketnumberVisible, setChangeTicketnumberVisible] = useState(
     false
   );
@@ -34,9 +36,16 @@ const Products = props => {
           addProductsVisible={addProductsVisible}
           setAddProductsVisible={setAddProductsVisible}
           setChangeTicketnumberVisible={setChangeTicketnumberVisible}
+          setSupportVisible={setSupportVisible}
           setUser={props.setUser}
           user={props.user}
         />
+        <SupportModal
+          supportVisible={supportVisible}
+          setSupportVisible={setSupportVisible}
+          user={props.user}
+        />
+
         <AddProduct
           addProductsVisible={addProductsVisible}
           setAddProductsVisible={setAddProductsVisible}
