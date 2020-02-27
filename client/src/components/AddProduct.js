@@ -18,7 +18,6 @@ const AddProduct = props => {
   const {
     getFieldDecorator,
     getFieldValue,
-    setFieldsValue,
     resetFields,
     validateFields
   } = props.form;
@@ -27,7 +26,7 @@ const AddProduct = props => {
 
   const handleSubmit = () => {
     setConfirmLoading(true);
-    if (productsAdded >= 24) {
+    if (productsAdded >= 48) {
       message.error(
         "You've already added 48 products. You cannot add anymore products."
       );
