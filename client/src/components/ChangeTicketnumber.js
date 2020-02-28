@@ -64,6 +64,9 @@ const EditProduct = props => {
   };
 
   const compareToTicketnumbers = (rule, value, callback) => {
+    if (value === props.user.ticketnumber) {
+      callback();
+    }
     if (value) {
       ticketnumbers.forEach(ticketnumber => {
         if (value === ticketnumber) {

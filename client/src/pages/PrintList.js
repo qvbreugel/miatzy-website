@@ -26,7 +26,7 @@ const PrintList = props => {
         <React.Fragment>
           <Row type="flex" justify="left">
             <h1 style={{ textAlign: "left", marginLeft: "16px" }}>
-              Miatzy Bring &#38;Buy
+              Miatzy Bring &#38; Buy
             </h1>
           </Row>
           <Row type="flex" justify="space-between">
