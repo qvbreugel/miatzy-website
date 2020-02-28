@@ -64,22 +64,25 @@ const EditProduct = props => {
   };
 
   const compareToTicketnumbers = (rule, value, callback) => {
-    if (value === props.user.ticketnumber) {
-      callback();
-    }
     if (value) {
-      ticketnumbers.forEach(ticketnumber => {
-        if (value === ticketnumber) {
-          setButtonDisabled(true);
-          setValidateStatus({ type: "error", feedback: false });
-          callback("This ticket number is already registered");
-        }
-      });
-    } else {
-      callback();
-      if (validateStatus.type != "none") {
-        setValidateStatus({ type: "none", feedback: false });
-        setButtonDisabled(false);
+      if (value === props.user.ticketnumber) {
+        setButtonDisabled(true);
+        setValidateStatus({ type: "error", feedback: false });
+        callback("You did not change your ticketnumber");
+      } else {
+        ticketnumbers.forEach(ticketnumber => {
+          if (value === ticketnumber) {
+            setButtonDisabled(true);
+            setValidateStatus({ type: "error", feedback: false });
+            callback("This ticket number is already registered");
+          } else {
+            callback();
+            if (validateStatus.type != "none") {
+              setValidateStatus({ type: "none", feedback: false });
+              setButtonDisabled(false);
+            }
+          }
+        });
       }
     }
   };
