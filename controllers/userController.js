@@ -82,33 +82,34 @@ module.exports = {
     const token = crypto.randomBytes(20).toString("hex");
     const data = [token, expires, email];
     db.User.setResetPassword(data, result => {
-      res.status(200).json(result);
-    });
+      if (result.affectedRows) {
+        const transporter = nodemailer.createTransport({
+          host: "smtp.zoho.eu",
+          port: 465,
+          secure: true, //ssl
+          auth: {
+            user: process.env.RESET_PW_EMAIL,
+            pass: process.env.RESET_PW_PW
+          }
+        });
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.zoho.eu",
-      port: 465,
-      secure: true, //ssl
-      auth: {
-        user: process.env.RESET_PW_EMAIL,
-        pass: process.env.RESET_PW_PW
+        const mailOptions = {
+          from: "Cactus Password Reset <resetpassword@cactusweb.dev>",
+          to: email,
+          subject: "Reset your miatzy database password",
+          text:
+            `Click the following link or paste it in your browser to reset your password. \n \n` +
+            `http://miatzy-website.herokuapp.com/resetpassword/${token} \n \n` +
+            `If you did not request to reset your password, you can ignore this email and your password will remain unchanged. \n`
+        };
+
+        transporter.sendMail(mailOptions, function(err, response) {
+          if (err) throw err;
+          console.log(response);
+          res.send(res);
+        });
       }
-    });
-
-    const mailOptions = {
-      from: "Cactus Password Reset <resetpassword@cactusweb.dev>",
-      to: email,
-      subject: "Reset your miatzy database password",
-      text:
-        `Click the following link or paste it in your browser to reset your password. \n \n` +
-        `http://miatzy-website.herokuapp.com/resetpassword/${token} \n \n` +
-        `If you did not request to reset your password, you can ignore this email and your password will remain unchanged. \n`
-    };
-
-    transporter.sendMail(mailOptions, function(err, response) {
-      if (err) throw err;
-      console.log(response);
-      res.send(res);
+      res.status(200).json(result);
     });
   },
   getUserByToken: (req, res) => {

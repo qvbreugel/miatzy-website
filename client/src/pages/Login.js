@@ -101,6 +101,9 @@ const Login = props => {
                   }}
                 />
               )}
+              <Link to="/forgotpassword" style={{ color: "#FF7926" }}>
+                &nbsp;Forgot password?
+              </Link>
             </Form.Item>
             <Form.Item>
               <Button
@@ -114,7 +117,7 @@ const Login = props => {
                 Log in
               </Button>
               Or
-              <Link to="/register" style={{ color: "#FF7926" }}>
+              <Link to="/register" style={{ color: "#FF7926", margin: "auto" }}>
                 &nbsp;register now!
               </Link>
             </Form.Item>

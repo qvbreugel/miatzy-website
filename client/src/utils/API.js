@@ -174,7 +174,6 @@ export default {
       const res = await axios.post("/api/password/forgot", {
         vals: email
       });
-      console.log(res);
       return res;
     } catch (err) {
       return console.log(err);
