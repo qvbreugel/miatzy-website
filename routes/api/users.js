@@ -22,6 +22,5 @@ router
 
 router.route("/unique").get(userController.getUniqueValues);
 router.route("/ticketnumber").post(userController.updateTicketnumber);
-router.route("/forgotpassword").post(userController.forgotPassword);
 
 module.exports = router;

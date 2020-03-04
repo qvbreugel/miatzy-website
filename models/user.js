@@ -104,10 +104,19 @@ const User = {
       cb(result);
     });
   },
-  getUserByToken: cb => {
-    console.log("TOKEN");
-    const queryString = "SELECT * FROM users";
-    connection.execute(queryString, (err, result) => {
+  getUserByToken: (token, cb) => {
+    const userToken = [token];
+    const queryString =
+      "SELECT user_id,reset_password_expires FROM users WHERE reset_password_token=?";
+    connection.execute(queryString, userToken, (err, result) => {
+      if (err) throw err;
+      cb(result);
+    });
+  },
+  resetPassword: (vals, cb) => {
+    const queryString =
+      "UPDATE users SET password=? WHERE reset_password_token=?";
+    connection.execute(queryString, vals, (err, result) => {
       if (err) throw err;
       cb(result);
     });

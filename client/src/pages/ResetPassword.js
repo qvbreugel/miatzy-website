@@ -3,11 +3,15 @@ import { Form, Input, Button } from "antd";
 import API from "../utils/API";
 
 const ResetPassword = props => {
-  const { getFieldDecorator, getFieldValue } = props.form;
+  const {
+    getFieldDecorator,
+    getFieldValue,
+    validateFieldsAndScroll
+  } = props.form;
 
   useEffect(() => {
     const token = props.match.params.token;
-    API.reset().then(res => console.log(res));
+    API.getUserByToken(token).then(res => console.log(res));
   }, []);
 
   const compareToFirstPassword = (rule, value, callback) => {
@@ -20,6 +24,16 @@ const ResetPassword = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    validateFieldsAndScroll((err, values) => {
+      if (err) throw err;
+      else {
+        const data = {
+          password: getFieldValue("password"),
+          token: props.match.params.token
+        };
+        API.resetPassword(data).then(res => console.log(res));
+      }
+    });
   };
 
   return (

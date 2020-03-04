@@ -28,7 +28,6 @@ module.exports = {
     });
   },
   getAllUsers: (req, res) => {
-    console.log(req.isAuthenticated());
     db.User.selectAll(data => {
       res.status(200).json(data);
     });
@@ -110,6 +109,23 @@ module.exports = {
       if (err) throw err;
       console.log(response);
       res.send(res);
+    });
+  },
+  getUserByToken: (req, res) => {
+    db.User.getUserByToken(req.params.token, data => {
+      res.status(200).json(data);
+    });
+  },
+  resetPassword: (req, res) => {
+    const vals = req.body.vals;
+    bcrypt.hash(vals[0], saltRounds, (err, hash) => {
+      if (err) {
+        console.error(err);
+      }
+      vals[0] = hash;
+      db.User.resetPassword(vals, data => {
+        res.status(200).json(data);
+      });
     });
   }
 };

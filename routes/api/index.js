@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const usersRoutes = require("./users");
 const productsRoutes = require("./products");
+const passwordRoutes = require("./password");
 const loginRoute = require("./login");
 const logoutRoute = require("./logout");
 
@@ -14,6 +15,8 @@ router.use("/logout", logoutRoute);
 router.use("/user", usersRoutes);
 
 router.use("/product", productsRoutes);
+
+router.use("/password", passwordRoutes);
 
 // '/api' for any ongoing testing the root of /api route GOOD place for mounting middleware in router.use
 router.get("/", (req, res) => {

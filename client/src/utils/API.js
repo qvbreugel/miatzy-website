@@ -171,10 +171,29 @@ export default {
   forgotPassword: async userEmail => {
     try {
       const { email } = userEmail;
-      const res = await axios.post("/api/user/forgotpassword", {
+      const res = await axios.post("/api/password/forgot", {
         vals: email
       });
       console.log(res);
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
+  getUserByToken: async token => {
+    try {
+      const res = await axios.get(`/api/password/reset/${token}`);
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
+  },
+  resetPassword: async data => {
+    try {
+      const { password, token } = data;
+      const res = await axios.post("/api/password/reset", {
+        vals: [password, token]
+      });
       return res;
     } catch (err) {
       return console.log(err);
