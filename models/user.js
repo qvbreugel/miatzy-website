@@ -94,6 +94,23 @@ const User = {
         });
       }
     });
+  },
+  setResetPassword: (vals, cb) => {
+    console.log(vals);
+    const queryString =
+      "UPDATE users SET reset_password_token=?, reset_password_expires=? WHERE email=?;";
+    connection.execute(queryString, vals, (err, result) => {
+      if (err) throw err;
+      cb(result);
+    });
+  },
+  getUserByToken: cb => {
+    console.log("TOKEN");
+    const queryString = "SELECT * FROM users";
+    connection.execute(queryString, (err, result) => {
+      if (err) throw err;
+      cb(result);
+    });
   }
 };
 module.exports = User;

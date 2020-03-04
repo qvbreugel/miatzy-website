@@ -167,5 +167,17 @@ export default {
     } catch (err) {
       return console.log(err);
     }
+  },
+  forgotPassword: async userEmail => {
+    try {
+      const { email } = userEmail;
+      const res = await axios.post("/api/user/forgotpassword", {
+        vals: email
+      });
+      console.log(res);
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
   }
 };

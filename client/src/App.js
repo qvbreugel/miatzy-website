@@ -15,6 +15,8 @@ import Products from "./pages/Products";
 import API from "./utils/API";
 import PrintProducts from "./pages/PrintProducts";
 import Expired from "./pages/Expired";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
@@ -77,6 +79,17 @@ const App = () => {
             />
             <Route strict exact path="/print" component={PrintProducts} />
             <Route strict exact path="/expired" component={Expired} />
+            <Route
+              strict
+              exact
+              path="/forgotpassword"
+              component={ForgotPassword}
+            />
+            <Route
+              strict
+              path="/resetpassword/:token"
+              component={ResetPassword}
+            />
             <Route component={NoMatch} />
           </Switch>
         </Container>
