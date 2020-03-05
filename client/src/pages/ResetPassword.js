@@ -1,79 +1,50 @@
-import React, { useEffect } from "react";
-import { Form, Input, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { Spin } from "antd";
 import API from "../utils/API";
+import ResetPasswordForm from "../components/ResetPasswordForm";
+import LoadingPageIcon from "../components/LoadingPageIcon";
+import ResetPasswordFeedback from "../components/ResetPasswordFeedback";
 
 const ResetPassword = props => {
-  const {
-    getFieldDecorator,
-    getFieldValue,
-    validateFieldsAndScroll
-  } = props.form;
+  const [screen, setScreen] = useState("loading");
 
   useEffect(() => {
     const token = props.match.params.token;
-    API.getUserByToken(token).then(res => console.log(res));
-  }, []);
-
-  const compareToFirstPassword = (rule, value, callback) => {
-    if (value && value !== getFieldValue("password")) {
-      callback("The passwords do not match");
-    } else {
-      callback();
-    }
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    validateFieldsAndScroll((err, values) => {
-      if (err) throw err;
-      else {
-        const data = {
-          password: getFieldValue("password"),
-          token: props.match.params.token
-        };
-        API.resetPassword(data).then(res => console.log(res));
+    API.getUserByToken(token).then(res => {
+      if (!res.data.length) {
+        setScreen("invalid");
+      } else if (Date.now() >= res.data[0].reset_password_expires) {
+        setScreen("expired");
+      } else {
+        setScreen("reset");
       }
     });
-  };
+  }, []);
 
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Item label="Password">
-        {getFieldDecorator("password", {
-          rules: [
-            {
-              required: true,
-              message: "Please fill in a password"
-            }
-          ]
-        })(<Input.Password />)}
-      </Form.Item>
-      <Form.Item label="Confirm Password">
-        {getFieldDecorator("confirm", {
-          rules: [
-            {
-              required: true,
-              message: "Please confirm your password"
-            },
-            {
-              validator: compareToFirstPassword
-            }
-          ],
-          validateTrigger: "onBlur"
-        })(<Input.Password />)}
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="register-form-button"
-          style={{ width: "100%" }}
-        >
-          Register
-        </Button>
-      </Form.Item>
-    </Form>
-  );
+  switch (screen) {
+    case "loading":
+      return <LoadingPageIcon />;
+
+    case "invalid":
+      return <ResetPasswordFeedback type="invalid" />;
+
+    case "expired":
+      return <ResetPasswordFeedback type="expired" />;
+
+    case "success":
+      return <ResetPasswordFeedback type="success" />;
+
+    case "reset":
+      return (
+        <ResetPasswordForm
+          token={props.match.params.token}
+          setScreen={setScreen}
+        />
+      );
+
+    default:
+      return <Spin size="large" />;
+  }
 };
 
-export default Form.create()(ResetPassword);
+export default ResetPassword;

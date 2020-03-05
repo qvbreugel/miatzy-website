@@ -78,7 +78,7 @@ module.exports = {
   },
   forgotPassword: (req, res) => {
     const email = req.body.vals;
-    const expires = Date.now() + 36000;
+    const expires = Date.now() + 360000;
     const token = crypto.randomBytes(20).toString("hex");
     const data = [token, expires, email];
     db.User.setResetPassword(data, result => {
@@ -99,6 +99,7 @@ module.exports = {
           subject: "Reset your miatzy database password",
           text:
             `Click the following link or paste it in your browser to reset your password. \n \n` +
+            `The link will expire in 1 hour. \n \n` +
             `http://miatzy-website.herokuapp.com/resetpassword/${token} \n \n` +
             `If you did not request to reset your password, you can ignore this email and your password will remain unchanged. \n`
         };

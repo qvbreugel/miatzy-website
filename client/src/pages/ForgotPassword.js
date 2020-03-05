@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Input, Form, Button, Result, Icon, Row } from "antd";
-import { Link } from "react-router-dom";
 import API from "../utils/API";
 import LinkButton from "../components/LinkButton";
 
