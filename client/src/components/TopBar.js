@@ -69,7 +69,7 @@ const TopBar = props => {
           </Col>
           <Col>
             <Link to="/print" target="_blank">
-              <Button icon="barcode">Print Barcodes</Button>
+              <Button icon="barcode">Print Labels</Button>
             </Link>
           </Col>
           <Col>
